@@ -7,10 +7,10 @@
   [![Workflow status](https://img.shields.io/github/actions/workflow/status/rei-2/Amalgam/msbuild.yml?branch=master&style=for-the-badge)](/../../actions)
   [![Commit activity](https://img.shields.io/github/commit-activity/m/rei-2/Amalgam?style=for-the-badge)](/../../commits/)
   
-  [![Download](.github/assets/download.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64Release.zip)
-  [![PDB](.github/assets/pdb.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64ReleasePDB.zip)
-  [![Download AVX2](.github/assets/download_avx2.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseAVX2.zip)
-  [![PDB AVX2](.github/assets/pdb.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseAVX2PDB.zip)
+  [![Download](.github/assets/download.svg)](https://nightly.link/xDroflLOL/Amalgam/workflows/msbuild/master/Amalgamx64Release.zip)
+  [![PDB](.github/assets/pdb.svg)](https://nightly.link/xDroflLOL/Amalgam/workflows/msbuild/master/Amalgamx64ReleasePDB.zip)
+  [![Download AVX2](.github/assets/download_avx2.svg)](https://nightly.link/xDroflLOL/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseAVX2.zip)
+  [![PDB AVX2](.github/assets/pdb.svg)](https://nightly.link/xDroflLOL/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseAVX2PDB.zip)
   <br>
   [![Freetype](.github/assets/freetype.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseFreetype.zip)
   [![PDB Freetype](.github/assets/pdb.svg)](https://nightly.link/rei-2/Amalgam/workflows/msbuild/master/Amalgamx64ReleaseFreetypePDB.zip)
