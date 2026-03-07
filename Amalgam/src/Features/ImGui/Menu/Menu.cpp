@@ -1091,6 +1091,7 @@ void CMenu::MenuMisc(int iTab)
 					FToggle(Vars::Misc::Game::F2PChatBypass, FToggleEnum::Right);
 					FToggle(Vars::Misc::Game::NetworkFix, FToggleEnum::Left);
 					FToggle(Vars::Misc::Game::SetupBonesOptimization, FToggleEnum::Right);
+					FToggle(Vars::Misc::Game::InsecureBypass, FToggleEnum::Left); FTooltip("When enabled, bypass client-side checks that disallows joining VAC protected servers with -insecure launch parameter");
 				} EndSection();
 				if (Vars::Debug::Options.Value)
 				{

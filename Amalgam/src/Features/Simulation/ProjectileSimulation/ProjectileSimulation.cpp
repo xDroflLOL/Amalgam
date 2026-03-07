@@ -195,7 +195,7 @@ bool CProjectileSimulation::GetInfoMain(CTFPlayer* pPlayer, CTFWeaponBase* pWeap
 		static auto tf_fireball_max_lifetime = H::ConVars.FindVar("tf_fireball_max_lifetime");
 
 		SDK::GetProjectileFireSetup(pPlayer, vAngles, { 3.f, 7.f, -9.f }, vPos, vAngle, bRedirect ? tf_fireball_distance->GetFloat() : 0.f, 1.f, bInterp);
-
+		
 		float flSpeed = tf_fireball_speed->GetFloat();
 		float flLifeTime = std::min(tf_fireball_distance->GetFloat() / flSpeed, tf_fireball_max_lifetime->GetFloat());
 		tProjInfo = { pPlayer, pWeapon, FNV1A::Hash32Const("models/weapons/c_models/c_flameball/c_flameball.mdl"), vPos, vAngle, { 1.f, 1.f, 1.f /*damaging hull much bigger, shouldn't matter here*/ }, flSpeed, 0.f, flLifeTime };

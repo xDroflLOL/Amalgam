@@ -24,7 +24,7 @@ MAKE_HOOK(Cbuf_ExecuteCommand, S::Cbuf_ExecuteCommand(), void,
 
         if (F::Commands.Run(sCommand, vArgs))
             return;
-	}
+        }
 
     CALL_ORIGINAL(args, source);
 }

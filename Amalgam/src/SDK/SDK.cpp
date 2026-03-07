@@ -816,13 +816,13 @@ void SDK::GetProjectileFireSetup(CTFPlayer* pPlayer, const Vec3& vAngIn, Vec3 vO
 
 		if (flCutoff < 1.f)
 		{
-			CGameTrace trace = {};
-			CTraceFilterCollideable filter = {};
-			filter.pSkip = pPlayer;
-			filter.iType = SKIP_CHECK;
-			Trace(vShootPos, vEndPos, MASK_SOLID, &filter, &trace);
+		CGameTrace trace = {};
+		CTraceFilterCollideable filter = {};
+		filter.pSkip = pPlayer;
+		filter.iType = SKIP_CHECK;
+		Trace(vShootPos, vEndPos, MASK_SOLID, &filter, &trace);
 			if (trace.DidHit() && trace.fraction > flCutoff)
-				vEndPos = trace.endpos;
+			vEndPos = trace.endpos;
 		}
 
 		vAngOut = Math::VectorAngles(vEndPos - vPosOut);

@@ -201,6 +201,7 @@
     <ClCompile Include="src\Hooks\CTFPlayerShared_ShouldSuppressPrediction.cpp" />
     <ClCompile Include="src\Hooks\CHLTVCamera_CalcView.cpp" />
     <ClCompile Include="src\Hooks\CTFPlayer_InSameDisguisedTeam.cpp" />
+    <ClCompile Include="src\Hooks\Host_IsSecureServerAllowed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\UtlVector\UtlVector.h" />

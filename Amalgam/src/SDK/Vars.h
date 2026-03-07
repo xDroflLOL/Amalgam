@@ -754,6 +754,7 @@ NAMESPACE_BEGIN(Vars)
 			CVar(F2PChatBypass, "F2P chat bypass", false);
 			CVar(NetworkFix, "Network fix", false);
 			CVar(SetupBonesOptimization, "Bones optimization", false);
+			CVar(InsecureBypass, "Bypass insecure dialog", false);
 
 			CVar(AntiCheatCritHack, "Anti-cheat crit hack", false, NOSAVE | DEBUGVAR);
 		NAMESPACE_END(Game)
