@@ -250,6 +250,7 @@ NAMESPACE_BEGIN(Vars)
 		CVar(BoundHitboxFaceIgnoreZ, "Bound hitbox face ignore Z color", Color_t(255, 255, 255, 0), VISUAL);
 
 		CVar(SpellFootstep, "Spell footstep color", Color_t(255, 255, 255, 255), VISUAL);
+		CVar(EdgebugPath, "Auto edgebug path color", Color_t(255, 255, 255, 255), VISUAL);
 	NAMESPACE_END(Colors)
 
 	NAMESPACE_BEGIN(Aimbot)
@@ -707,6 +708,8 @@ NAMESPACE_BEGIN(Vars)
 			CVar(Bunnyhop, "Bunnyhop", false);
 			CVar(EdgeJump, "Edge jump", false);
 			CVar(AutoJumpbug, "Auto jumpbug", false);
+			CVar(AutoFaNJump, "Auto FaN jump", false);
+			CVar(AutoEdgebug, "Auto edgebug", false);
 			CVar(NoPush, "No push", false);
 			CVar(AutoRocketJump, "Auto rocket jump", false);
 			CVar(AutoCTap, "Auto ctap", false);
@@ -723,6 +726,16 @@ NAMESPACE_BEGIN(Vars)
 			CVar(AutoRocketJumpSkipAir, "Skip air", 1, NOSAVE | DEBUGVAR, 0, 3);
 			CVar(AutoRocketJumpTimingOffset, "Timing offset", 0, NOSAVE | DEBUGVAR, 0, 3);
 			CVar(AutoRocketJumpApplyAbove, "Apply offset above", 0, NOSAVE | DEBUGVAR, 0, 10);
+
+			CVar(AutoFaNJumpOnSolidTicks, "On solid ticks", 8, NOSAVE | DEBUGVAR, 2, 30);
+			CVar(AutoFaNJumpCheckCeiling, "Check ceiling", true, NOSAVE | DEBUGVAR);
+
+			CVar(AutoEdgebugStrafe, "Strafe", false, NOSAVE | DEBUGVAR);
+			CVar(AutoEdgebugStrafeSilentLook, "Strafe silent", false, NOSAVE | DEBUGVAR);
+			CVar(AutoEdgebugStrafeSamples, "Strafe samples", 6, NOSAVE | DEBUGVAR | SLIDER_CLAMP, 3, 15);
+			CVar(AutoEdgebugStrafeMaxDelta, "Max delta", 180, NOSAVE | DEBUGVAR | SLIDER_CLAMP, 1, 360);
+			CVar(AutoEdgebugTryNegativeDir, "Try negative dir", true, NOSAVE | DEBUGVAR);
+			CVar(AutoEdgebugTryRandomMove, "Try random move", true, NOSAVE | DEBUGVAR);
 		NAMESPACE_END(Movement)
 
 		NAMESPACE_BEGIN(Automation)
@@ -736,6 +749,11 @@ NAMESPACE_BEGIN(Vars)
 			CVar(AutoF2Ignored, "Auto F2 ignored", false);
 			CVar(AutoF1Priority, "Auto F1 priority", false);
 			CVar(AcceptItemDrops, "Auto accept item drops", false);
+			CVar(DisguiseAfterBackstab, "Disguise after backstab", false);
+			CVar(AutoDisguiseIfUndisguised, "Auto disguise", false);
+			CVarEnum(DisguiseClass, "Disguise class", 0, NONE, nullptr,
+				VA_LIST("Scout", "Soldier", "Pyro", "Demoman", "Heavy", "Engineer", "Medic", "Sniper", "Spy"),
+				Scout, Soldier, Pyro, Demoman, Heavy, Engineer, Medic, Sniper, Spy);
 		NAMESPACE_END(Automation)
 
 		NAMESPACE_BEGIN(Exploits)

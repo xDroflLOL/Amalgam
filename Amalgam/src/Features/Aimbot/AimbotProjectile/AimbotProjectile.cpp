@@ -492,14 +492,14 @@ static inline void TracePoint(Vec3& vPoint, int& iType, Vec3& vTargetEye, Info_t
 			switch (trace.m_pEnt->GetClassID())
 			{	// make sure we get past entity or prop
 			case ETFClassID::CWorld:
-				if (trace.hitbox) filter.iTeam = trace.hitbox - 1;
-				filter.pSkip = nullptr;
+				if (trace.hitbox) filter.m_iTeam = trace.hitbox - 1;
+				filter.m_pSkip = nullptr;
 				break;
 			default:
-				filter.pSkip = trace.m_pEnt;
+				filter.m_pSkip = trace.m_pEnt;
 			}
 			SDK::Trace(trace.endpos - (vTargetEye - vPoint).Normalized(), vPoint, MASK_SOLID | CONTENTS_NOSKIP, &filter, &trace);
-			filter.pSkip = nullptr, filter.iTeam = -1;
+			filter.m_pSkip = nullptr, filter.m_iTeam = -1;
 #ifdef SPLASH_DEBUG5
 			s_mTraceCount["Splash out 2"]++;
 #endif

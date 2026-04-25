@@ -60,9 +60,15 @@ public:
 class CTraceFilterWorldAndPropsOnly : public ITraceFilter
 {
 public:
+	CTraceFilterWorldAndPropsOnly() {}
+	CTraceFilterWorldAndPropsOnly(const IHandleEntity* pPassEntity)
+	{
+		m_pSkip = const_cast<CBaseEntity*>(reinterpret_cast<const CBaseEntity*>(pPassEntity));
+	}
+
 	bool ShouldHitEntity(IHandleEntity* pServerEntity, int nContentsMask) override;
 	TraceType_t GetTraceType() const override;
-	CBaseEntity* pSkip = nullptr;
 
-	int iTeam = -1;
+	CBaseEntity* m_pSkip = nullptr;
+	int m_iTeam = -1;
 };

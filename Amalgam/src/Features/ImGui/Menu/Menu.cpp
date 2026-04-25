@@ -1026,9 +1026,12 @@ void CMenu::MenuMisc(int iTab)
 					PopTransparent();
 					FToggle(Vars::Misc::Movement::Bunnyhop, FToggleEnum::Left);
 					FToggle(Vars::Misc::Movement::EdgeJump, FToggleEnum::Right);
+					FColorPicker(Vars::Colors::EdgebugPath);
 					FToggle(Vars::Misc::Movement::AutoJumpbug, FToggleEnum::Left); // this is unreliable without setups, do not depend on it!
-					FToggle(Vars::Misc::Movement::NoPush, FToggleEnum::Right);
-					FToggle(Vars::Misc::Movement::AutoRocketJump, FToggleEnum::Left);
+					FToggle(Vars::Misc::Movement::AutoEdgebug, FToggleEnum::Right);
+					FToggle(Vars::Misc::Movement::NoPush, FToggleEnum::Left);
+					FToggle(Vars::Misc::Movement::AutoRocketJump, FToggleEnum::Right);
+					FToggle(Vars::Misc::Movement::AutoFaNJump, FToggleEnum::Left);
 					FToggle(Vars::Misc::Movement::AutoCTap, FToggleEnum::Right);
 					FToggle(Vars::Misc::Movement::FastStop, FToggleEnum::Left);
 					FToggle(Vars::Misc::Movement::FastAccelerate, FToggleEnum::Right);
@@ -1041,12 +1044,30 @@ void CMenu::MenuMisc(int iTab)
 				{
 					if (Section("##Debug"))
 					{
+						FText("Rocket jump");
+						Divider();
 						FSlider(Vars::Misc::Movement::AutoRocketJumpChokeGrounded, FToggleEnum::Left);
 						FSlider(Vars::Misc::Movement::AutoRocketJumpChokeAir, FToggleEnum::Right);
 						FSlider(Vars::Misc::Movement::AutoRocketJumpSkipGround, FToggleEnum::Left);
 						FSlider(Vars::Misc::Movement::AutoRocketJumpSkipAir, FToggleEnum::Right);
 						FSlider(Vars::Misc::Movement::AutoRocketJumpTimingOffset, FToggleEnum::Left);
 						FSlider(Vars::Misc::Movement::AutoRocketJumpApplyAbove, FToggleEnum::Right);
+
+						Divider();
+						FText("FaN jump");
+						Divider();
+						FSlider(Vars::Misc::Movement::AutoFaNJumpOnSolidTicks, FSliderEnum::Left);
+						FToggle(Vars::Misc::Movement::AutoFaNJumpCheckCeiling, FToggleEnum::Right);
+
+						Divider();
+						FText("Edgebug");
+						Divider();
+						FToggle(Vars::Misc::Movement::AutoEdgebugStrafe, FToggleEnum::Left);
+						FToggle(Vars::Misc::Movement::AutoEdgebugStrafeSilentLook, FToggleEnum::Right);
+						FSlider(Vars::Misc::Movement::AutoEdgebugStrafeSamples, FSliderEnum::Left);
+						FSlider(Vars::Misc::Movement::AutoEdgebugStrafeMaxDelta, FSliderEnum::Right);
+						FToggle(Vars::Misc::Movement::AutoEdgebugTryNegativeDir, FToggleEnum::Left);
+						FToggle(Vars::Misc::Movement::AutoEdgebugTryRandomMove, FToggleEnum::Right);
 					} EndSection();
 				}
 				if (Section("Automation"))
@@ -1058,7 +1079,10 @@ void CMenu::MenuMisc(int iTab)
 					FToggle(Vars::Misc::Automation::KartControl, FToggleEnum::Right);
 					FToggle(Vars::Misc::Automation::AutoF2Ignored, FToggleEnum::Left);
 					FToggle(Vars::Misc::Automation::AutoF1Priority, FToggleEnum::Right);
-					FToggle(Vars::Misc::Automation::AcceptItemDrops);
+					FToggle(Vars::Misc::Automation::AcceptItemDrops, FToggleEnum::Left);
+					FToggle(Vars::Misc::Automation::DisguiseAfterBackstab, FToggleEnum::Right);
+					FToggle(Vars::Misc::Automation::AutoDisguiseIfUndisguised, FToggleEnum::Left);
+					FDropdown(Vars::Misc::Automation::DisguiseClass, FDropdownEnum::Right);
 				} EndSection();
 				if (Section("Mann vs. Machine", 8))
 				{

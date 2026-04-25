@@ -111,14 +111,17 @@ TraceType_t CTraceFilterCollideable::GetTraceType() const
 
 bool CTraceFilterWorldAndPropsOnly::ShouldHitEntity(IHandleEntity* pServerEntity, int nContentsMask)
 {
-	if (!pServerEntity || pServerEntity == pSkip)
+	if (!pServerEntity || pServerEntity == m_pSkip)
 		return false;
 	if (pServerEntity->GetRefEHandle().GetSerialNumber() == (1 << 15))
-		return pServerEntity->GetRefEHandle().GetEntryIndex() != iTeam; // just use team variable since cliententitylist can give us nullptrs for some props for whatever reason
+		return pServerEntity->GetRefEHandle().GetEntryIndex() != m_iTeam; // just use team variable since cliententitylist can give us nullptrs for some props for whatever reason
 
 	auto pEntity = reinterpret_cast<CBaseEntity*>(pServerEntity);
-	if (iTeam == -1) iTeam = pSkip ? pSkip->m_iTeamNum() : 0;
-
+	const auto nClassID = pEntity->GetClassID();
+	
+	if (m_iTeam == -1) 
+		m_iTeam = m_pSkip ? m_pSkip->m_iTeamNum() : TEAM_UNASSIGNED;
+	
 	switch (pEntity->GetClassID())
 	{
 	case ETFClassID::CBaseEntity:
@@ -129,8 +132,10 @@ bool CTraceFilterWorldAndPropsOnly::ShouldHitEntity(IHandleEntity* pServerEntity
 	case ETFClassID::CFunc_LOD:
 	case ETFClassID::CObjectCartDispenser:
 	case ETFClassID::CFuncTrackTrain:
-	case ETFClassID::CFuncConveyor: return true;
-	case ETFClassID::CFuncRespawnRoomVisualizer: return nContentsMask & CONTENTS_PLAYERCLIP && pEntity->m_iTeamNum() != iTeam;
+	case ETFClassID::CFuncConveyor:
+		return true;
+	case ETFClassID::CFuncRespawnRoomVisualizer:
+		return nContentsMask & CONTENTS_PLAYERCLIP && pEntity->m_iTeamNum() != m_iTeam;
 	}
 
 	return false;
