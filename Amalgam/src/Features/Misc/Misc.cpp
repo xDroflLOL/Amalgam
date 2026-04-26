@@ -123,7 +123,7 @@ void CMisc::AutoEdgebug(CTFPlayer* pLocal, CUserCmd* pCmd)
 			if (m_vEdgebugPath.size())
 			{
 				if (Vars::Colors::EdgebugPath.Value.a)
-					G::PathStorage.emplace_back(m_vEdgebugPath, I::GlobalVars->curtime + TICK_INTERVAL, Vars::Colors::EdgebugPath.Value, Vars::Visuals::Simulation::StyleEnum::Line);
+					G::PathStorage.emplace_back(m_vEdgebugPath, I::GlobalVars->curtime + TICK_INTERVAL, Vars::Colors::EdgebugPath.Value, Vars::Visuals::Path::StyleEnum::Line);
 				m_vEdgebugPath.erase(m_vEdgebugPath.begin());
 			}
 			if (!m_bEdgeBugRepredict)

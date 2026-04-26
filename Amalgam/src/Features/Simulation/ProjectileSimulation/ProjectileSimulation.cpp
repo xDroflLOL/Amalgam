@@ -347,7 +347,7 @@ bool CProjectileSimulation::GetInfo(CTFPlayer* pPlayer, CTFWeaponBase* pWeapon, 
 
 	CGameTrace trace = {};
 	CTraceFilterWorldAndPropsOnly filter = {};
-	filter.m_pSkip = pPlayer;
+	filter.pSkip = pPlayer;
 
 	Vec3 vStart = bInterp ? pPlayer->GetEyePosition() : pPlayer->GetShootPos();
 	Vec3 vEnd = tProjInfo.m_vPos;

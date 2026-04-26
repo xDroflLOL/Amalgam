@@ -377,7 +377,7 @@ bool SDK::VisPosWorld(CBaseEntity* pSkip, const CBaseEntity* pEntity, const Vec3
 {
 	CGameTrace trace = {};
 	CTraceFilterWorldAndPropsOnly filter = {};
-	filter.m_pSkip = pSkip;
+	filter.pSkip = pSkip;
 	Trace(vFrom, vTo, nMask, &filter, &trace);
 	if (trace.DidHit())
 		return trace.m_pEnt && trace.m_pEnt == pEntity;

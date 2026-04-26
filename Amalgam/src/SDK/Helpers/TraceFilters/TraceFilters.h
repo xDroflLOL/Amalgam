@@ -66,12 +66,12 @@ public:
 	CTraceFilterWorldAndPropsOnly() {}
 	CTraceFilterWorldAndPropsOnly(const IHandleEntity* pPassEntity)
 	{
-		m_pSkip = const_cast<CBaseEntity*>(reinterpret_cast<const CBaseEntity*>(pPassEntity));
+		pSkip = const_cast<CBaseEntity*>(reinterpret_cast<const CBaseEntity*>(pPassEntity));
 	}
 
 	bool ShouldHitEntity(IHandleEntity* pHandleEntity, int nContentsMask) override;
 	TraceType_t GetTraceType() const override;
 
-	CBaseEntity* m_pSkip = nullptr;
-	int m_iTeam = -1;
+	CBaseEntity* pSkip = nullptr;
+	int iTeam = -1;
 };

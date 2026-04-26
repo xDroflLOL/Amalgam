@@ -1370,7 +1370,7 @@ void CMenu::MenuMisc(int iTab)
 					FToggle(Vars::Misc::Game::NetworkFix, FToggleEnum::Left);
 					FToggle(Vars::Misc::Game::SetupBonesOptimization, FToggleEnum::Right);
 					FToggle(Vars::Misc::Game::AntiCheatCompatibility);
-					FToggle(Vars::Misc::Game::InsecureBypass, FToggleEnum::Left); FTooltip("When enabled, bypass client-side checks that disallows joining VAC protected servers with -insecure launch parameter");
+					FToggle(Vars::Misc::Game::InsecureBypass, FToggleEnum::Left); FTooltip("When enabled, disables client-side checks that disallows joining VAC protected servers with -insecure launch parameter.\n\nThis does NOT disable VAC itself, since it still gets loaded whenever you joina VAC secured server.\nHowever, the anti-cheat modules haven't been updated, and thus VAC is still loading the bare minimum authentication modules so you don't get a VAC authentication error ever 5 minutes, which also means your HWID is still getting logged. Thank you, Gaben.");
 				} EndSection();
 				if (Vars::Debug::Options.Value)
 				{
