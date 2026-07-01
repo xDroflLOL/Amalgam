@@ -2,6 +2,7 @@
 
 #include "../PacketManip/FakeLag/FakeLag.h"
 #include "../Ticks/Ticks.h"
+#include "../AntiCheatCompatibility/AntiCheatCompatibility.h"
 #include "../Aimbot/Aimbot.h"
 
 void CBacktrack::Reset()
@@ -33,7 +34,7 @@ float CBacktrack::GetWishFake()
 
 float CBacktrack::GetWishLerp()
 {
-	if (Vars::Misc::Game::AntiCheatCompatibility.Value)
+	if (F::AntiCheatCompatibility.Active())
 		return std::clamp(Vars::Backtrack::Interp.Value / 1000.f, G::Lerp, 0.1f);
 
 	return std::clamp(Vars::Backtrack::Interp.Value / 1000.f, G::Lerp, m_flMaxUnlag);
@@ -46,7 +47,7 @@ float CBacktrack::GetFakeLatency()
 
 float CBacktrack::GetFakeInterp()
 {
-	if (Vars::Misc::Game::AntiCheatCompatibility.Value)
+	if (F::AntiCheatCompatibility.Active())
 		return std::min(m_flFakeInterp, 0.1f);
 
 	return m_flFakeInterp;
@@ -69,7 +70,7 @@ int CBacktrack::GetAnticipatedChoke(int iMethod)
 
 void CBacktrack::CreateMove(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd)
 {
-	if (F::Aimbot.m_bRan || Vars::Misc::Game::AntiCheatCompatibility.Value)
+	if (F::AntiCheatCompatibility.Active())
 		return;
 
 	// correct tick_count for fakeinterp / nointerp
@@ -139,6 +140,7 @@ bool CBacktrack::GetRecords(CBaseEntity* pEntity, std::vector<TickRecord*>& vRet
 		return false;
 
 	auto& vRecords = m_mRecords[pEntity];
+	vReturn.reserve(vRecords.size());
 	for (auto& tRecord : vRecords)
 		vReturn.push_back(&tRecord);
 	return true;
@@ -154,15 +156,15 @@ std::vector<TickRecord*> CBacktrack::GetValidRecords(std::vector<TickRecord*>& v
 		return {};
 
 	std::vector<TickRecord*> vReturn = {};
-	float flCorrect = std::clamp(GetReal(MAX_FLOWS, false) + ROUND_TO_TICKS(GetFakeInterp()), 0.f, m_flMaxUnlag);
-	int iServerTick = m_iTickCount + GetAnticipatedChoke() + Vars::Backtrack::Offset.Value + TIME_TO_TICKS(GetReal(FLOW_OUTGOING));
+	float flCorrect = std::clamp(GetReal(MAX_FLOWS, false) + ROUND_TO_TICKS(GetFakeInterp()), 0.f, m_flMaxUnlag) + flTimeMod;
+	int iServerTick = m_iTickCount + TIME_TO_TICKS(GetReal(FLOW_OUTGOING)) + GetAnticipatedChoke() + Vars::Backtrack::Offset.Value;
 
-	if (!Vars::Misc::Game::AntiCheatCompatibility.Value && GetWindow())
+	if (!F::AntiCheatCompatibility.Active() && GetWindow())
 	{
 		for (auto pRecord : vRecords)
 		{
-			float flDelta = fabsf(flCorrect - (TICKS_TO_TIME(iServerTick) - (pRecord->m_flSimTime + flTimeMod)));
-			if (flDelta > GetWindow())
+			float flDelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(pRecord->m_flSimTime));
+			if (fabsf(flDelta) > GetWindow())
 				continue;
 
 			vReturn.push_back(pRecord);
@@ -174,8 +176,8 @@ std::vector<TickRecord*> CBacktrack::GetValidRecords(std::vector<TickRecord*>& v
 		float flMinDelta = 0.2f;
 		for (auto pRecord : vRecords)
 		{
-			float flDelta = fabsf(flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(pRecord->m_flSimTime + flTimeMod)));
-			if (flDelta > flMinDelta)
+			float flDelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(pRecord->m_flSimTime));
+			if (fabsf(flDelta) > flMinDelta)
 				continue;
 
 			flMinDelta = flDelta;
@@ -193,17 +195,15 @@ std::vector<TickRecord*> CBacktrack::GetValidRecords(std::vector<TickRecord*>& v
 				return pLocal->m_vecOrigin().DistToSqr(a->m_vOrigin) < pLocal->m_vecOrigin().DistToSqr(b->m_vOrigin);
 			});
 		else
-		{
 			std::sort(vReturn.begin(), vReturn.end(), [&](const TickRecord* a, const TickRecord* b) -> bool
 			{
 				if (Vars::Backtrack::PreferOnShot.Value && a->m_bOnShot != b->m_bOnShot)
 					return a->m_bOnShot > b->m_bOnShot;
 
-				const float flADelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(a->m_flSimTime + flTimeMod));
-				const float flBDelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(b->m_flSimTime + flTimeMod));
+				float flADelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(a->m_flSimTime));
+				float flBDelta = flCorrect - TICKS_TO_TIME(iServerTick - TIME_TO_TICKS(b->m_flSimTime));
 				return fabsf(flADelta) < fabsf(flBDelta);
 			});
-		}
 	}
 
 	return vReturn;
