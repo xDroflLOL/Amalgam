@@ -247,7 +247,6 @@ NAMESPACE_BEGIN(Vars)
 		CVar(SplashRadiusIgnoreZ, "Splash radius ignore Z color", Color_t(255, 255, 255, 255), VISUAL);
 		CVar(RealPath, "Real path color", Color_t(255, 255, 255, 0), NOSAVE | DEBUGVAR);
 		CVar(RealPathIgnoreZ, "Real path ignore Z color", Color_t(255, 255, 255, 255), NOSAVE | DEBUGVAR);
-		CVar(SpellFootstep, "Spell footstep color", Color_t(255, 255, 255, 255), VISUAL);
 		CVar(EdgebugPath, "Auto edgebug path color", Color_t(255, 255, 255, 255), VISUAL);
 	NAMESPACE_END(Colors)
 
@@ -717,9 +716,7 @@ NAMESPACE_BEGIN(Vars)
 			CVar(EdgeJump, "Edge jump", false);
 			CVar(AutoJumpbug, "Auto jumpbug", false);
 			CVar(BreakJump, "Break jump", false);
-			CVar(AutoFaNJump, "Auto FaN jump", false);
 			CVar(AutoEdgebug, "Auto edgebug", false);
-			CVar(NoPush, "No push", false);
 			CVar(AutoRocketJump, "Auto rocket jump", false);
 			CVar(AutoCTap, "Auto ctap", false);
 			CVar(AutoFaNJump, "Auto FaN jump", false);

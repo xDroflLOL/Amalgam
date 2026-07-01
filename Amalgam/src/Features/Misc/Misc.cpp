@@ -7,7 +7,7 @@
 #include "../AntiCheatCompatibility/AntiCheatCompatibility.h"
 #include "../EnginePrediction/EnginePrediction.h"
 
-void CMisc::RunPre(CTFPlayer* pLocal, CUserCmd* pCmd)
+void CMisc::RunPre(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd)
 {
 	CheatsBypass();
 	WeaponSway();
@@ -24,7 +24,7 @@ void CMisc::RunPre(CTFPlayer* pLocal, CUserCmd* pCmd)
 		return;
 
 	AutoJumpbug(pLocal, pCmd);
-	AutoFaNJump(pLocal, , pCmd);
+	AutoFaNJump(pLocal, pWeapon, pCmd);
 	AutoRevJump(pLocal, pCmd);
 	AutoStrafe(pLocal, pCmd);
 	AutoPeek(pLocal, pCmd);

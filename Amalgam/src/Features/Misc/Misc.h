@@ -9,7 +9,6 @@ private:
 	void AutoJump(CTFPlayer* pLocal, CUserCmd* pCmd);
 	void AutoJumpbug(CTFPlayer* pLocal, CUserCmd* pCmd);
 	void AutoEdgebug(CTFPlayer* pLocal, CUserCmd* pCmd);
-	void AutoFaNJump(CTFPlayer* pLocal, CUserCmd* pCmd);
 	void AutoRevJump(CTFPlayer* pLocal, CUserCmd* pCmd);
 	void AutoStrafe(CTFPlayer* pLocal, CUserCmd* pCmd);
 	void MovementLock(CTFPlayer* pLocal, CUserCmd* pCmd);
@@ -51,7 +50,7 @@ private:
 	//bool bSteamCleared = false;
 
 public:
-	void RunPre(CTFPlayer* pLocal, CUserCmd* pCmd);
+	void RunPre(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd);
 	void RunPost(CTFPlayer* pLocal, CUserCmd* pCmd);
 
 	void Event(IGameEvent* pEvent, uint32_t uNameHash);
