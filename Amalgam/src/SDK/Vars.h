@@ -825,6 +825,7 @@ NAMESPACE_BEGIN(Vars)
 			);
 			CVar(ExtendQueue, "Extend queue", false);
 			CVar(AutoCasualQueue, "Auto casual queue", false);
+			CVar(RandomPingValue, "Random ping value", false);
 		NAMESPACE_END(Queueing)
 
 		NAMESPACE_BEGIN(MannVsMachine, Mann vs. Machine)

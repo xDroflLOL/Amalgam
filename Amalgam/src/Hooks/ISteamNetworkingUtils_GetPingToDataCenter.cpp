@@ -63,7 +63,9 @@ MAKE_HOOK(ISteamNetworkingUtils_GetPingToDataCenter, U::Memory.GetVirtual(I::Ste
 	char sPopID[5];
 	PopIdName(popID, sPopID);
 	if (auto uDatacenter = GetDatacenter(FNV1A::Hash32(sPopID)))
-		return Vars::Misc::Queueing::ForceRegions.Value & uDatacenter ? 1 : 1000;
+		if(Vars::Misc::Queueing::RandomPingValue.Value)
+			return Vars::Misc::Queueing::ForceRegions.Value & uDatacenter ? SDK::RandomInt(20, 40) : SDK::RandomInt(800, 1000);
+		else return Vars::Misc::Queueing::ForceRegions.Value & uDatacenter ? 1 : 1000;
 
 	return iReturn;
 }

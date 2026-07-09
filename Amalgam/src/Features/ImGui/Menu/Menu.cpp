@@ -1462,8 +1462,9 @@ void CMenu::MenuMisc(int iTab)
                         I::TFGCClientSystem->SetPendingPingRefresh(true);
                         I::TFGCClientSystem->PingThink();
                     }
-                    FToggle(Vars::Misc::Queueing::ExtendQueue);
-                    FToggle(Vars::Misc::Queueing::AutoCasualQueue);
+                    FToggle(Vars::Misc::Queueing::ExtendQueue, FToggleEnum::Left);
+                    FToggle(Vars::Misc::Queueing::AutoCasualQueue, FToggleEnum::Right);
+					FToggle(Vars::Misc::Queueing::RandomPingValue, FToggleEnum::Left); FTooltip("Randomizes the ping value so that selected servers are within 20 - 40 ms, and unselected servers 800 - 1000 ms\nThis is probably placebo, but whatever...");
                 } EndSection();
 				if (Section("Sound"))
 				{
