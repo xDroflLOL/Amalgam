@@ -1451,12 +1451,20 @@ void CMenu::MenuMisc(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Queueing"))
-				{
-					FDropdown(Vars::Misc::Queueing::ForceRegions);
-					FToggle(Vars::Misc::Queueing::ExtendQueue, FToggleEnum::Left);
-					FToggle(Vars::Misc::Queueing::AutoCasualQueue, FToggleEnum::Right);
-				} EndSection();
+                if (Section("Queueing"))
+                {
+                    static int iPrevRegions = Vars::Misc::Queueing::ForceRegions.Value;
+                    FDropdown(Vars::Misc::Queueing::ForceRegions);
+                    int iCurrentRegions = Vars::Misc::Queueing::ForceRegions.Value;
+                    if (iCurrentRegions != iPrevRegions)
+                    {
+                        iPrevRegions = iCurrentRegions;
+                        I::TFGCClientSystem->SetPendingPingRefresh(true);
+                        I::TFGCClientSystem->PingThink();
+                    }
+                    FToggle(Vars::Misc::Queueing::ExtendQueue);
+                    FToggle(Vars::Misc::Queueing::AutoCasualQueue);
+                } EndSection();
 				if (Section("Sound"))
 				{
 					FDropdown(Vars::Misc::Sound::Block);
