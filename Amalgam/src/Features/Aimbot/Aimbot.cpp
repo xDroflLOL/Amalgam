@@ -73,7 +73,16 @@ void CAimbot::Run(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd)
 
 	RunMain(pLocal, pWeapon, pCmd);
 
-	G::Attacking = SDK::IsAttacking(pLocal, pWeapon, pCmd, true);
+	if ((G::Attacking = SDK::IsAttacking(pLocal, pWeapon, pCmd, true)) == 1 
+		&& m_bRan
+		&& !Vars::Misc::Game::AntiCheatCompatibility.Value
+		&& pLocal->IsAlive() && !pLocal->IsAGhost() && !pLocal->InCond(TF_COND_HALLOWEEN_KART))
+	{
+		if (G::PrimaryWeaponType == EWeaponType::HITSCAN)
+			F::AimbotHitscan.BacktrackToCrosshair(pCmd);
+		else if (G::PrimaryWeaponType == EWeaponType::MELEE)
+			F::AimbotMelee.BacktrackToCrosshair(pLocal, pCmd);
+	}
 }
 
 void CAimbot::Draw(CTFPlayer* pLocal)

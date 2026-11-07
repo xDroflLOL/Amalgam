@@ -563,6 +563,55 @@ static inline void DrawVisuals(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserC
 	}
 }
 
+std::pair<float, float> CAimbotMelee::GetClosestRecord(std::vector<TickRecord*> vRecords)
+{
+	float flSimTime = -1.f;
+	float flMaxDist = 300.f;
+	TickRecord* pBest = nullptr;
+	for (auto pRecord : vRecords)
+	{
+		float flDist = pRecord->m_vOrigin.DistTo(m_vEyePos);
+		if (flDist < flMaxDist)
+		{
+			flMaxDist = flDist;
+			flSimTime = pRecord->m_flSimTime;
+		}
+	}
+	return { flMaxDist, flSimTime };
+}
+
+void CAimbotMelee::BacktrackToCrosshair(CTFPlayer* pLocal, CUserCmd* pCmd)
+{
+	float flBestSimTime = -1.f;
+	float flMaxDist = 300.f;
+	m_vEyePos = pLocal->GetShootPos();
+	for (auto pEntity : H::Entities.GetGroup(EntityEnum::PlayerEnemy))
+	{
+		if (!pEntity->As<CTFPlayer>()->IsAlive()
+			|| pEntity->As<CTFPlayer>()->IsAGhost()
+			|| pEntity->As<CTFPlayer>()->IsInvulnerable()
+			|| pEntity->GetAbsOrigin().DistTo(m_vEyePos) > 1000.f)
+			continue;
+
+		std::vector<TickRecord*> vRecords;
+		if (!F::Backtrack.GetRecords(pEntity, vRecords))
+			continue;
+
+		vRecords = F::Backtrack.GetValidRecords(vRecords);
+		auto tInfo = GetClosestRecord(vRecords);
+		if (tInfo.first < flMaxDist)
+		{
+			flBestSimTime = tInfo.second;
+			flMaxDist = tInfo.first;
+		}
+	}
+
+	if (flBestSimTime == -1.f)
+		return;
+
+	pCmd->tick_count = TIME_TO_TICKS(flBestSimTime + F::Backtrack.GetFakeInterp());
+}
+
 void CAimbotMelee::Run(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd)
 {
 	static int iStaticAimType = Vars::Aimbot::General::AimType.Value;
@@ -578,6 +627,9 @@ void CAimbotMelee::Run(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd
 	if (!Vars::Aimbot::General::AimType.Value
 		|| !F::AimbotGlobal.ShouldAim() && pWeapon->m_flSmackTime() < 0.f)
 		return;
+
+	m_mRecordMap.clear(); m_mPaths.clear();
+	m_iDoubletapTicks = F::Ticks.GetTicks(pWeapon);
 
 	if (RunSapper(pLocal, pWeapon, pCmd))
 		return;
@@ -597,6 +649,7 @@ void CAimbotMelee::Run(CTFPlayer* pLocal, CTFWeaponBase* pWeapon, CUserCmd* pCmd
 		if (iResult == 2)
 		{
 			G::AimTarget = { tTarget.m_pEntity->entindex(), I::GlobalVars->tickcount, 0 };
+			G::AimPoint = { tTarget.m_vPos, I::GlobalVars->tickcount };
 			Aim(pCmd, tTarget.m_vAngleTo);
 			break;
 		}
